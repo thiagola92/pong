@@ -1,6 +1,6 @@
-package Others;
+package others;
 
-import Logic.Game;
+import logic.Game;
 
 public class Main {
 

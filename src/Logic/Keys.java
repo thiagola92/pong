@@ -1,8 +1,9 @@
-package Logic;
+package logic;
 
-import java.io.IOException;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
-public class Keys extends Thread {
+public class Keys implements KeyListener {
 	
 	private Game game;
 	
@@ -10,41 +11,33 @@ public class Keys extends Thread {
 		super();
 		game = g;
 	}
-	
-	public void run() {
+
+	@Override
+	public void keyPressed(KeyEvent e) {
 		
-		int key;
-		
-		while(true) {
-			
-			try {
-				
-				do {
-					key = System.in.read();
-				} while(key == 10 || key == 13);
-				key_pressed(key);
-				
-			} catch (IOException e) {
-				System.out.println(">> IOException - if an I/O error occurs.");
-				e.printStackTrace();
-			}
-			
-		}
+		// W S I K
+		if(e.getKeyCode() == 87)
+			game.move_up_p1();
+		else if(e.getKeyCode() == 83)
+			game.move_down_p1();
+		else if(e.getKeyCode() == 73)
+			game.move_up_p2();
+		else if(e.getKeyCode() == 75)
+			game.move_down_p2();
+
+		game.update_game();
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
 		
 	}
-	
-	public void key_pressed(int key) {
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
 		
-		if(key == 'w')
-			game.move_up_p1();
-		else if(key == 's')
-			game.move_down_p1();
-		else if(key == 'i')
-			game.move_up_p2();
-		else if(key == 'k')
-			game.move_down_p2();
-		
-		game.update_game();
 	}
 
 }

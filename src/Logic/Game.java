@@ -1,4 +1,6 @@
-package Logic;
+package logic;
+
+import graphic.Game_window;
 
 public class Game {
 	
@@ -7,7 +9,7 @@ public class Game {
 	private int size = 4;		// tamanho das barras
 	private int pair;			// se o tamanho for par então essa variavel é -1
 	
-	private int matrix[][];		// matriz do jogo
+	private int matrix[][];		// matriz do jogo // primeiro valor é a altura(y) e o segundo a largura(x)
 	
 	private int center_p1;			// centro da barra do P1
 	private int center_p2;			// centro da barra do P2
@@ -20,9 +22,12 @@ public class Game {
 	
 	private Keys keyboard;		// classe responsavel por pegar as teclas
 	
+	private Game_window window;	// Janela responsável por exibir para o usuário o jogo
+	
 	public Game() {
 		matrix = new int[height][width];
 		keyboard = new Keys(this); 
+		window = new Game_window(this, keyboard);
 		
 		center_p1 = size/2;
 		center_p2 = size/2;
@@ -45,14 +50,13 @@ public class Game {
 		
 		for(int j=0; j < height; j++) {
 			for(int i=0; i < width; i++) {
-				System.out.print("[" + matrix[i][j] + "]");
+				System.out.print("[" + matrix[j][i] + "]");
 			}
 			System.out.print("\n");
 		}
 	}
 	
 	public void start_game() {
-		keyboard.start();
 		move_ball();
 	}
 	
@@ -74,14 +78,15 @@ public class Game {
 			for(int i=0; i < width; i++) {
 				
 				if( (i==0 && j >= start_p1 && j <= end_p1) || (i == width-1 && j >= start_p2 && j <= end_p2))
-					matrix[i][j] = 1;
+					matrix[j][i] = 1;
 				else
-					matrix[i][j] = 0;
+					matrix[j][i] = 0;
 			}
 		}
 		
-		matrix[ball_position_x][ball_position_y] = 1;
+		matrix[ball_position_y][ball_position_x] = 1;
 		
+		window.update_window();
 		print_game();
 	}
 	
@@ -176,5 +181,20 @@ public class Game {
 		
 		center_p2++;
 		
+	}
+	
+	///////////////////// GET /////////////////////////////
+
+
+	public int getHeight() {
+		return height;
+	}
+
+	public int getWidth() {
+		return width;
+	}
+
+	public int[][] getMatrix() {
+		return matrix;
 	}
 }
