@@ -6,7 +6,7 @@ public class Game {
 	
 	private int height = 10;	// cima <---> baixo
 	private int width = 10;		// esquerda <--> direita
-	private int size = 4;		// tamanho das barras
+	private int size = 3;		// tamanho das barras
 	private int pair;			// se o tamanho for par então essa variavel é -1
 	
 	private int matrix[][];		// matriz do jogo // primeiro valor é a altura(y) e o segundo a largura(x)
@@ -44,9 +44,6 @@ public class Game {
 	}
 
 	public void print_game() {
-		
-		for(int i=0; i < height; i++)
-			System.out.println("");
 		
 		for(int j=0; j < height; j++) {
 			for(int i=0; i < width; i++) {
@@ -87,7 +84,7 @@ public class Game {
 		matrix[ball_position_y][ball_position_x] = 1;
 		
 		window.update_window();
-		print_game();
+		//print_game();
 	}
 	
 	/////////////////// GAME ////////////////////

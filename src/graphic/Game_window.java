@@ -44,7 +44,7 @@ public class Game_window extends JFrame {
 		for(int j=0; j < game.getHeight(); j++) {
 			
 			for(int i=0; i < game.getWidth(); i++) {
-				line += "[" + game.getMatrix()[j][i] + "]";
+				line += " " + game.getMatrix()[j][i] + " ";
 			}
 			
 			game_state[j].setText(line);
