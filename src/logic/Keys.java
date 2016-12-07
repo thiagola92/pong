@@ -15,14 +15,17 @@ public class Keys implements KeyListener {
 	@Override
 	public void keyPressed(KeyEvent e) {
 		
-		// W S I K
+		System.out.println(e.getKeyCode());
+		
+		// Controles p1: W, S
+		// Controles p2: Seta para cima, Seta para baixo
 		if(e.getKeyCode() == 87)
 			game.move_up_p1();
 		else if(e.getKeyCode() == 83)
 			game.move_down_p1();
-		else if(e.getKeyCode() == 73)
+		else if(e.getKeyCode() == 38)
 			game.move_up_p2();
-		else if(e.getKeyCode() == 75)
+		else if(e.getKeyCode() == 40)
 			game.move_down_p2();
 
 		game.update_game();
