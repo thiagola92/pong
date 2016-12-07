@@ -14,8 +14,9 @@ public class Game {
 	
 	private int ball_position_x;	// posicao x da bola
 	private int ball_position_y;	// posicao y da bola
-	private int ball_speed_x;		// velocidade em x // -1 esquerda <---> 1 direita 
-	private int ball_speed_y;		// velocidade em y // -1 cima <---> 1 baixo
+	private int ball_move_x;		// velocidade em x // -1 esquerda <---> 1 direita 
+	private int ball_move_y;		// velocidade em y // -1 cima <---> 1 baixo
+	private int ball_speed;			// velocidade com que a bola se move
 	
 	private Keys keyboard;		// classe responsavel por pegar as teclas
 	
@@ -28,8 +29,9 @@ public class Game {
 		
 		ball_position_x = width/2;
 		ball_position_y = 0;
-		ball_speed_x = 1;
-		ball_speed_y = 1;
+		ball_move_x = 1;
+		ball_move_y = 1;
+		ball_speed = 1;
 
 		pair = size%2 == 1 ? 0 : -1;
 		
@@ -92,7 +94,7 @@ public class Game {
 			update_game();
 		
 			try {
-				Thread.sleep(1000);
+				Thread.sleep(1000/ball_speed);
 			} catch (InterruptedException e) {
 				System.out.println(">> IllegalArgumentException - if the value of millis is negative");
 				System.out.println(">> InterruptedException - if any thread has interrupted the current thread. The interrupted status of the current thread is cleared when this exception is thrown");
@@ -100,40 +102,39 @@ public class Game {
 			}
 			
 			// bola passou dos jogadores
-			if(ball_position_x + ball_speed_x < 0 || ball_position_x + ball_speed_x >= width) {
+			if(ball_position_x + ball_move_x < 0 || ball_position_x + ball_move_x >= width) {
 
 				ball_position_x = width/2;
 				ball_position_y = 0;
 				
-				ball_speed_x = 1;
-				ball_speed_y = 1;
+				ball_move_x = 1;
+				ball_move_y = 1;
 				
 				continue;
 			}
 			
 			// Se bola encostou no teto ou chão inverte a direção y
-			if(ball_position_y + ball_speed_y < 0 || ball_position_y + ball_speed_y >= height)
-				ball_speed_y *= -1; 
+			if(ball_position_y + ball_move_y < 0 || ball_position_y + ball_move_y >= height)
+				ball_move_y *= -1; 
 			
 			// Encontrando outro jogador
-
-			int start_p1 = center_p1 - size/2;
-			int end_p1 = center_p1 + size/2 + pair;
-			if(ball_position_x + ball_speed_x ==  0 &&
-					ball_position_y + ball_speed_y >= start_p1 &&
-					ball_position_y + ball_speed_y <= end_p1)
-				ball_speed_x *= -1;
+			int start = center_p1 - size/2;
+			int end = center_p1 + size/2 + pair;
+			if(ball_position_x + ball_move_x ==  0 &&
+					ball_position_y + ball_move_y >= start &&
+					ball_position_y + ball_move_y <= end)
+				ball_move_x *= -1;
 			
-			int start_p2 = center_p2 - size/2;
-			int end_p2 = center_p2 + size/2 + pair;
-			if(ball_position_x + ball_speed_x == width-1 &&
-					ball_position_y + ball_speed_y >= start_p2 &&
-					ball_position_y + ball_speed_y <= end_p2)
-				ball_speed_x *= -1;
+			start = center_p2 - size/2;
+			end = center_p2 + size/2 + pair;
+			if(ball_position_x + ball_move_x == width-1 &&
+					ball_position_y + ball_move_y >= start &&
+					ball_position_y + ball_move_y <= end)
+				ball_move_x *= -1;
 			
 			// Nova posição da bola
-			ball_position_x += ball_speed_x;
-			ball_position_y += ball_speed_y;
+			ball_position_x += ball_move_x;
+			ball_position_y += ball_move_y;
 		
 		}
 		
