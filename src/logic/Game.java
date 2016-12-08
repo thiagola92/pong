@@ -81,9 +81,9 @@ public class Game {
 			}
 		}
 		
-		matrix[ball_position_y][ball_position_x] = 1;
+		matrix[ball_position_y][ball_position_x] = 2;
 		
-		window.update_window();
+		window.paint(null);
 		//print_game();
 	}
 	
