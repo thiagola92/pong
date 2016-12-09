@@ -15,8 +15,10 @@ public class Game {
 	private boolean wait_p1;		// se deve esperar a bola bater no p1 para começar a agir
 	private int ai_level;			// nivel de dificuldade do computador
 	
-	private int center_p1;			// centro da barra do P1
-	private int center_p2;			// centro da barra do P2
+	private int start_p1;			// onde a barra do p1 começa
+	private int start_p2;			// onde a barra do p2 começa
+	private int end_p1;				// onde a barra do p1 termina
+	private int end_p2;				// onde a barra do p2 termina
 	private int score_p1;			// pontuação do p1
 	private int score_p2;			// pontuação do p2
 	
@@ -35,14 +37,16 @@ public class Game {
 		keyboard = new Keys(this); 
 		window = new Game_window(this, keyboard);
 		
-		size = 2;
+		size = 1;
 		
 		player2 = false;
 		wait_p1 = true;
 		ai_level = 3;
 		
-		center_p1 = size/2;
-		center_p2 = size/2;
+		start_p1 = 0;
+		start_p2 = 0;
+		end_p1 = start_p1 + size/2 + pair;
+		end_p2 = start_p2 + size/2 + pair;
 		score_p1 = 0;
 		score_p2 = 0;
 		
@@ -109,18 +113,6 @@ public class Game {
 	
 	public void update_game() {
 		
-		int start_p1;
-		int end_p1;
-		
-		int start_p2;
-		int end_p2;
-		
-		start_p1 = center_p1 - size/2;
-		end_p1 = center_p1 + size/2 + pair;
-
-		start_p2 = center_p2 - size/2;
-		end_p2 = center_p2 + size/2 + pair;
-		
 		for(int j=0; j < height; j++) {
 			for(int i=0; i < width; i++) {
 				
@@ -181,18 +173,14 @@ public class Game {
 			ball_move_y *= -1; 
 
 		// Bola encontrando outro jogador
-		int start = center_p1 - size/2;
-		int end = center_p1 + size/2 + pair;
 		if(ball_position_x + ball_move_x ==  0 &&
-				ball_position_y + ball_move_y >= start &&
-				ball_position_y + ball_move_y <= end)
+				ball_position_y + ball_move_y >= start_p1 &&
+				ball_position_y + ball_move_y <= end_p1)
 			ball_move_x *= -1;
-
-		start = center_p2 - size/2;
-		end = center_p2 + size/2 + pair;
+		
 		if(ball_position_x + ball_move_x == width-1 &&
-				ball_position_y + ball_move_y >= start &&
-				ball_position_y + ball_move_y <= end)
+				ball_position_y + ball_move_y >= start_p2 &&
+				ball_position_y + ball_move_y <= end_p2)
 			ball_move_x *= -1;
 
 		// Nova posição da bola
@@ -206,37 +194,41 @@ public class Game {
 	
 	public void move_up_p1() {
 		
-		if( (center_p1 - size/2) - 1 < 0)
+		if( start_p1 - 1 < 0)
 			return;
 		
-		center_p1--;
+		start_p1--;
+		end_p1--;
 		
 	}
 	
 	public void move_down_p1() {
 		
-		if( (center_p1 + size/2 + pair) + 1 >= height )
+		if( end_p1 + 1 >= height )
 			return;
-		
-		center_p1++;
+
+		start_p1++;
+		end_p1++;
 		
 	}
 	
 	public void move_up_p2() {
 		
-		if( (center_p2 - size/2) - 1 < 0)
+		if( start_p2 - 1 < 0)
 			return;
 		
-		center_p2--;
+		start_p2--;
+		end_p2--;
 		
 	}
 	
 	public void move_down_p2() {
 		
-		if( (center_p2 + size/2 + pair) + 1 >= height )
+		if( end_p2 + 1 >= height )
 			return;
-		
-		center_p2++;
+
+		start_p2++;
+		end_p2++;
 		
 	}
 	
@@ -262,17 +254,16 @@ public class Game {
 
 		if(wait_p1 == true && ball_move_x == -1)
 			return;
-		
-		int ball_move_y = this.ball_move_y;
 
-		// Se bola encostou no teto ou chão inverte a direção y
+		// AI prevendo se bola encostou no teto ou chão e que vai inverter a direção y
+		int ball_move_y = this.ball_move_y;
 		if(ball_position_y + ball_move_y < 0 || ball_position_y + ball_move_y >= height)
 			ball_move_y *= -1; 
 		
 		// Lembrando que coordenada y aumenta quando a bola vai para baixo no jogo
-		if(ball_position_y + ball_move_y > center_p2)
+		if(ball_position_y + ball_move_y > start_p2)
 			move_down_p2();
-		else if(ball_position_y + ball_move_y < center_p2)
+		else if(ball_position_y + ball_move_y < end_p2)
 			move_up_p2();
 		
 	}
