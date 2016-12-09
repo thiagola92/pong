@@ -27,6 +27,8 @@ public class Keys implements KeyListener {
 			game.move_up_p2();
 		else if(e.getKeyCode() == 40)
 			game.move_down_p2();
+		else if(e.getKeyCode() == 82)
+			game.reset_score();
 
 		game.update_game();
 	}

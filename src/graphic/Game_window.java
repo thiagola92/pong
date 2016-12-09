@@ -3,11 +3,9 @@ package graphic;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 
 import logic.Game;
 import logic.Keys;
@@ -59,13 +57,13 @@ public class Game_window extends JFrame {
 			for(int i=0; i < game.getWidth(); i++) {
 				if(game.getMatrix()[j][i] == 1) {
 					g.setColor(Color.LIGHT_GRAY);
-					g.fillRect(5 + rect_width*i, 30 + rect_height*j, rect_width, rect_height);
+					g.fillRect(edge_x + rect_width*i, edge_y + rect_height*j, rect_width, rect_height);
 				} else if(game.getMatrix()[j][i] == 2) {
 					g.setColor(Color.RED);
-					g.fillRect(5 + rect_width*i, 30 + rect_height*j, rect_width, rect_height);
+					g.fillRect(edge_x + rect_width*i, edge_y + rect_height*j, rect_width, rect_height);
 				} else {
 					g.setColor(Color.GRAY);
-					g.fillRect(5 + rect_width*i, 30 + rect_height*j, rect_width, rect_height);
+					g.fillRect(edge_x + rect_width*i, edge_y + rect_height*j, rect_width, rect_height);
 				}
 			}
 		}
